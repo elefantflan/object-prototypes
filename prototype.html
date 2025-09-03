@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototype</title>
+    <script>
+        function Player(name,marker){
+            if(!new.target){
+                throw Error("You must use the 'new' operator to call the constructor")
+            }
+            this.name=name;
+            this.marker=marker;
+            this.sayName=function(){
+                console.log(this.name)
+            };
+        }
+        const player1=new Player('steve', 'X');
+        const player2=new Player('Marian', 'O');
+        console.log(player1.name);
+        console.log(player2.name);
+
+        // error msg
+        // console.log(Player());
+
+        // find which object protytpe variable belong to
+        console.log(Object.getPrototypeOf(player1)===Player.prototype);
+        console.log(Object.getPrototypeOf(player2)===Player.prototype);
+
+        // using prototype function to apply to all original variables using prototype
+        Player.prototype.sayHello = function(){
+            console.log("Hello, I'm a player!");
+        }
+
+        player1.sayHello();
+        player2.sayHello();
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
