@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>this.</title>
+    <script>
+        // global this. = window
+        console.log(this===window);
+        this.color='Red';
+        console.log(window.color);
+        // "use strict" within function to prevent this = window
+        function show(){
+            "use strict";
+            console.log(this===undefined);
+
+            function display(){
+                console.log(this===undefined);
+            }
+            display();
+        }
+
+        show();
+        
+        // method calls
+
+        let car={
+            brand:'Honda',
+            getBrand: function(){
+                return this.brand;
+            }
+        }
+
+        let bike = {
+            brand: 'Harley Davidson'
+        }
+
+        console.log(car.getBrand());
+        // do not use let brand = car.getBrand();
+        // must specify object
+        let carBrand = car.getBrand.bind(car);
+        console.log(carBrand());
+        // another bind
+        let bikeBrand = car.getBrand.bind(bike);
+        console.log(bikeBrand());
+
+        // constructor calls
+        function Car(brand){
+            if (!new.target){
+                throw Error ('must use new operator to call function')
+            }
+            this.brand=brand;
+        }
+        Car.prototype.getBrand=function(){
+            return this.brand;
+        }
+        let car1= new Car('Honda');
+        console.log(car1.getBrand());
+
+
+
+        // indirect calls
+
+        function getBrand(prefix){
+            console.log(prefix + this.brand);
+        }
+        let honda={
+            brand:'Honda'
+        };
+        let audi={
+            brand:'Audi'
+        };
+        // call 
+        getBrand.call(honda, "it's a ");
+        getBrand.call(audi, "it's an ");
+        // apply() uses an array of arguments
+        getBrand.apply(honda, ["It's a "]);
+        getBrand.apply(audi, ["It's an "]);
+
+        // arrow functions (special case)
+        let getThis = ()=> this;
+        console.log(getThis()===window);
+
+        // ! arrow function does not create its own execution context
+        function Car(){
+            this.speed=120;
+        }
+        Car.prototype.getSpeed=()=>{
+            return this.speed;
+        }
+        var car2=new Car();
+        // undefined
+        console.log(car2.getSpeed());
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
