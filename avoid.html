@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do Not: Prototype</title>
+    <script>
+        function Person(name){
+            this.name=name;
+        }
+
+        Person.prototype.sayName = function(){
+            console.log(`Hello, I'm ${this.name}!`);
+        };
+
+        function Player(name,marker){
+            this.name=name;
+            this.marker=marker;
+        }
+
+        // Do not do this!
+        // Always use Object.setPrototypeOf(Player.prototype, Person.prototype);
+        Player.prototype=Person.prototype;
+        // Do not use this line ^ !!
+
+        function Enemy(name){
+            this.name=name;
+            this.marker="^";
+        }
+
+        // DO NOT
+        Enemy.prototype=Person.prototype;
+
+        Enemy.prototype.sayName=function(){
+            console.log("HAHAHAHA");
+        }
+
+        const carl=new Player('carl', 'x');
+        carl.sayName();
+
+        // this overrides previously written prototype settings
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
