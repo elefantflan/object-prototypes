@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigitalOcean Prototype Exercises</title>
+    <script>
+        let x = {};
+
+        // list of Object properties!
+        console.log(Object.getPrototypeOf(x));
+
+        console.log(Object.hasOwnProperty('toString'));
+        // null
+        console.log(x.__proto__.__proto__);
+
+        let y = [];
+        // not advised to use .__proto__ usually
+        console.log(y.__proto__);
+        // y is using an Array prototype
+        console.log(y.___proto___===Array.prototype);
+        console.log(y.__proto__.__proto__===Object.prototype);
+        
+        // true
+        console.log(Array.prototype.isPrototypeOf(y));
+        // true
+        console.log(Object.prototype.isPrototypeOf(Array));
+
+        // Character Sheet
+
+        function Hero (name, level){
+            this.name = name;
+            this.level=level;
+            this.info = function (){
+                return `${this.name},` + `level: ${this.level}`;
+            }
+        };
+
+        Hero.prototype.greet=function(){
+            return `${this.name} is ready for battle!!!`;
+        }
+
+        const hero1=new Hero('Bjorn', 1);
+        // get object property description
+        console.log(Object.getPrototypeOf(hero1));
+        // Hero's stat and greeting
+        console.log(hero1.info());
+        console.log(hero1.greet());
+
+        // Warrior 
+        function Warrior(name,level,weapon){
+            // chain constructor with call
+            Hero.call(this, name, level);
+
+            // add a new property
+            this.weapon=weapon;
+        }
+
+        // initialiize healer constructor
+        function Healer(name,level,spell){
+            Hero.call(this,name,level);
+
+            this.spell=spell;
+        }
+
+        Warrior.prototype.attack=function(){
+            return `${this.name} attacks with the ${this.weapon}.`;
+        }
+        Healer.prototype.heal=function(){
+            return`${this.name} casts ${this.spell}`;
+        }
+
+        const hero2=new Warrior('Ajax', 4, 'axe');
+        const hero3=new Healer('Sonar', 2, 'divinity');
+
+        console.log(hero2.valueOf());
+        console.log(hero3.valueOf());
+
+        console.log(hero2.attack());
+        console.log(hero3.heal());
+
+        // link Warrior and Healer constructors to Hero Prototype
+        Object.setPrototypeOf(Warrior.prototype, Hero.prototype);
+        Object.setPrototypeOf(Healer.prototype, Hero.prototype);
+
+        console.log(hero2.greet());
+        console.log(hero3.info());
+
+        console.log(hero3);
+
+
+        // understanding the .call() function
+        function Person(name, age) {
+        this.name = name;
+        this.age = age;
+        }
+
+        function Student(name, age, major) {
+        // Borrow Person's constructor, binding `this` to the new Student instance
+        Person.call(this, name, age);
+        this.major = major;
+        }
+
+        const s = new Student("Alex", 22, "CS");
+        console.log(s); // { name: 'Alex', age: 22, major: 'CS' }
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
