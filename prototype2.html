@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototype 2</title>
+    <script>
+        function Person(name){
+            this.name=name;
+        }
+
+        Person.prototype.sayName = function(){
+            console.log(`Hello, I'm ${this.name}!`);
+        };
+
+        function Player (name,marker){
+            this.name=name;
+            this.marker=marker;
+        };
+
+        Player.prototype.getMarker=function(){
+            console.log(`My marker is ${this.marker}`);
+        };
+
+        Object.getPrototypeOf(Player.prototype);
+
+        Object.setPrototypeOf(Player.prototype, Person.prototype);
+        Object.getPrototypeOf(Player.prototype);
+
+        const player1=new Player(`steve`, `X`);
+        const player2=new Player(`mason`, `O`);
+
+        player1.sayName();
+        player2.sayName();
+
+        player1.getMarker();
+        player2.getMarker();
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

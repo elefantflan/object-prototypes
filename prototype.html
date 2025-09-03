@@ -35,6 +35,15 @@
 
         player1.sayHello();
         player2.sayHello();
+
+        // Property of prototype: valueOf 
+        console.log(player1.valueOf());
+
+        // check what property prototypes have
+        player1.hasOwnProperty('valueOf');
+        console.log(Object.prototype.hasOwnProperty('valueOf'));
+
+        console.log(Object.prototype.hasOwnProperty('hasOwnProperty'));
     </script>
 </head>
 <body>
